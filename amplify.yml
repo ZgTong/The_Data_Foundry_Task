@@ -1,7 +1,7 @@
 version: 1
-appRoot: ./packages/frontend
 application:
-  - frontend:
+  - appRoot: packages/frontend
+    frontend:
       phases:
         preBuild:
           commands:
@@ -9,7 +9,7 @@ application:
             - pnpm install
         build:
           commands:
-            - pnpm run build
+            - pnpm frontend-build
       artifacts:
         baseDirectory: dist/
         files:
