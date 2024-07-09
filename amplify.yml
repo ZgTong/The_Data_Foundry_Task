@@ -1,5 +1,5 @@
 version: 1
-appRoot: .
+appRoot: packages/frontend
 applications:
   - frontend:
       phases:
@@ -9,12 +9,11 @@ applications:
             - pnpm install
         build:
           commands:
-            - pnpm frontend-build
+            - pnpm run build
       artifacts:
-        baseDirectory: packages/frontend/dist/
+        baseDirectory: dist/
         files:
           - "**/*"
       cache:
         paths:
           - node_modules
-          - packages/frontend/node_modules
