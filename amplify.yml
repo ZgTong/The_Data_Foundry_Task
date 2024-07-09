@@ -9,7 +9,7 @@ applications:
             - pnpm install
         build:
           commands:
-            - pnpm frontend-build
+            - pnpm run build
       artifacts:
         baseDirectory: dist/
         files:
