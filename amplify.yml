@@ -9,9 +9,9 @@ application:
             - pnpm install
         build:
           commands:
-            - pnpm frontend-build
+            - pnpm run build
       artifacts:
-        baseDirectory: packages/frontend/dist
+        baseDirectory: dist/
         files:
           - "**/*"
       cache:
