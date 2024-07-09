@@ -10,6 +10,14 @@
       "StackName": "amplify-thedatafoundrytask-dev-551b2",
       "StackId": "arn:aws:cloudformation:ap-southeast-2:959310337946:stack/amplify-thedatafoundrytask-dev-551b2/71e84520-3de4-11ef-8892-06136656088d",
       "AmplifyAppId": "d27m05puf0ik1c"
+    },
+    "categories": {
+      "auth": {
+        "thedatafoundrytaskfbee756c": {}
+      },
+      "api": {
+        "thedatafoundrytask": {}
+      }
     }
   }
 }

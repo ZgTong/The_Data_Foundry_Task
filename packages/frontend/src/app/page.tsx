@@ -6,10 +6,11 @@ import { useAppDispatch } from '@lib/hooks';
 import BackgroundSetter from '@components/widgets/BackgroundSetter';
 import { initialAppState } from '@lib/features/appSlice';
 
+
 const Home: FC = memo(({}, searchParams) => {
     const dispatch = useAppDispatch();
     const KL_theme = theme;
-    return (
+    return (        
         <ThemeProvider theme={KL_theme}>
             <BackgroundSetter />
             <Box

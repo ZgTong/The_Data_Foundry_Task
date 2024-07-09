@@ -1,0 +1,14 @@
+{
+  "resourceName": "s3tdf",
+  "policyUUID": "1f7452c2",
+  "bucketName": "thedatafoundrytask9e36e24f695b4e32bea792836db03",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
