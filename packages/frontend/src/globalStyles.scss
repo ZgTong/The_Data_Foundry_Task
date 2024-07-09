@@ -1,0 +1,128 @@
+@layer utilities {
+    /* Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+}
+
+@font-face {
+    font-family: 'Denton Test Thin';
+    font-style: normal;
+    src: url('/fonts/DentonTest/DentonTest-Thin.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Denton Test Light';
+    font-style: normal;
+    src: url('/fonts/DentonTest/DentonTest-Light.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Denton Test';
+    font-style: normal;
+    src: url('/fonts/DentonTest/DentonTest-Regular.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Denton Test Medium';
+    font-style: normal;
+    src: url('/fonts/DentonTest/DentonTest-Medium.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Denton Test Bold';
+    font-style: normal;
+    src: url('/fonts/DentonTest/DentonTest-Bold.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Denton Test ExtraBold';
+    font-style: normal;
+    src: url('/fonts/DentonTest/DentonTest-ExtraBold.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Denton Test Black';
+    font-style: normal;
+    src: url('/fonts/DentonTest/DentonTest-Black.otf') format('truetype');
+}
+
+@supports (-webkit-touch-callout: none) {
+    .h-screen {
+        height: stretch;
+    }
+}
+
+/* Global Styles */
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+    min-height: 100vh;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    white-space: pre-wrap;
+}
+
+body {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    padding: 0;
+    padding-top: 106px;
+    margin: 0;
+    color: #222;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: var(--font-dm-sans);
+    background-color: var(--background-color);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-image: var(--background-image-mobile);
+    background-position: top left;
+    overflow-x: hidden;
+    transition: background-image 0.5s ease;
+}
+
+td,
+th {
+    padding: 4px 8px 4px 4px;
+    text-align: left;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+th {
+    font-weight: 600;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+// add media query for desktop
+@media screen and (width >= 1024px) {
+    body {
+        font-size: 16px;
+        padding-top: 130px;
+        background-image: var(--background-image-desktop);
+        background-size: 100% auto;
+    }
+}

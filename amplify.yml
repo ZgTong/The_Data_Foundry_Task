@@ -1,0 +1,15 @@
+version: 1
+application:
+  - frontend:
+      phases:
+        build:
+          commands:
+            - npm ci
+            - npm run build
+      artifacts:
+        baseDirectory: build
+        files:
+          - "**/*"
+        cache:
+          paths:
+            - node_modules/**/*
