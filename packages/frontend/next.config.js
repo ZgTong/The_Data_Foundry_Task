@@ -22,6 +22,7 @@ module.exports = {
             use: ['@svgr/webpack'],
         });
         config.plugins.push(new StylelintPlugin());
+        config.resolve.alias.canvas = false;
         return config;
     },
     // output: 'export',
