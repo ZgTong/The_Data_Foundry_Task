@@ -29,7 +29,7 @@ const Home: FC = memo(({}, searchParams) => {
                         justifyContent: 'center',
                         width: '100%',
                         fontWeight: 'bold',
-                        height: '50vh'
+                        height: '50'
                     }}
                 >
                     Welcome: {username}

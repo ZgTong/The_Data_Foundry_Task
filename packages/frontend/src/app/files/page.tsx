@@ -1,32 +1,17 @@
 'use client';
+import dynamic from 'next/dynamic';
 import { ListOutputItemWithPath } from '@aws-amplify/storage/dist/esm/providers/s3/types';
 import { list, ListAllWithPathOutput, getUrl } from 'aws-amplify/storage';
-import { Document, Page, pdfjs } from 'react-pdf';
 import { Collection, Text, Card } from '@aws-amplify/ui-react';
 import { StorageImage } from '@aws-amplify/ui-react-storage';
 import { useState, useEffect } from 'react';
-import { Box, Typography, Pagination } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { PDFItem } from '@data/dataDef';
-import 'react-pdf/dist/Page/AnnotationLayer.css';
-import 'react-pdf/dist/Page/TextLayer.css';
-
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    'pdfjs-dist/build/pdf.worker.min.mjs',
-    import.meta.url
-).toString();
+const PDFViewer = dynamic(() => import('@components/widgets/PDFViewer'), { ssr: false });
 
 function Files() {
     const [imgFiles, setImgFiles] = useState<ListOutputItemWithPath[]>([]);
     const [pdfFiles, setPdfFiles] = useState<PDFItem[]>([]);
-    const onDocumentLoadSuccess = (
-        { numPages }: { numPages: number },
-        index: number
-    ): void => {
-        // update the number of pages for the pdf
-        const newPdfFiles = [...pdfFiles];
-        newPdfFiles[index].pageNumbers = numPages;
-        setPdfFiles(newPdfFiles);
-    };
     useEffect(() => {
         const listFiles = async () => {
             const processStorageList = (response: ListAllWithPathOutput) => {
@@ -135,18 +120,12 @@ function Files() {
                             >
                                 {item.listItem.path.split('/').pop()}
                             </Text>
-                            <Document
-                                file={item.url.href}
-                                onLoadSuccess={(pdf) =>
-                                    onDocumentLoadSuccess(pdf, index)
-                                }                                
-                            >
-                                {Array.apply(null, Array(item.pageNumbers))
-                                    .map((x: null, i: number) => i + 1)
-                                    .map((page: number) => (
-                                        <Page key={page} pageNumber={page} />
-                                    ))}
-                            </Document>
+                            <PDFViewer
+                                pdfFiles={pdfFiles}
+                                setPdfFiles={setPdfFiles}
+                                item={item}
+                                index={index}
+                            />
                         </Card>
                     )}
                 </Collection>
