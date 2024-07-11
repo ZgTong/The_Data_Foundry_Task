@@ -17,6 +17,9 @@
       },
       "api": {
         "thedatafoundrytask": {}
+      },
+      "storage": {
+        "s3tdf": {}
       }
     }
   }

@@ -1,1 +1,1 @@
-export type SectionId = 'works' | 'photography' | 'about' | 'contact' | 'home';
+export type SectionId = 'files' | 'portal';

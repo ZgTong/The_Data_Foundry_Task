@@ -5,6 +5,7 @@ import { Amplify } from 'aws-amplify';
 import { Box, Fade, Button } from '@mui/material';
 import Loading from '@app/loading';
 import awsExports from '@src/aws-exports';
+// import amplifyconfig from '@src/amplifyconfiguration.json';
 import '@aws-amplify/ui-react/styles.css';
 
 Amplify.configure(awsExports);
@@ -27,7 +28,6 @@ const ClientHosting: React.FC<{ children: React.ReactNode }> = ({
                 <Fade in={isLoaded} timeout={1500} key={'topFade'}>
                     <Box>
                         {children}
-                        <Button onClick={signOut}>Sign out</Button>
                     </Box>
                 </Fade>
             )}

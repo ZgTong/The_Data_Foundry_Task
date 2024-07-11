@@ -5,6 +5,7 @@ export interface AppState {
     backgroundImageMobile: string;
     backgroundImageDesktop: string;
     backgroundColor: string;
+    username: string | null;
 }
 export const initialAppState: AppState = {
     showHeader: true,
@@ -13,6 +14,7 @@ export const initialAppState: AppState = {
     backgroundImageDesktop:
         "",
     backgroundColor: '',
+    username: null,
 };
 export const appSlice: Slice = createSlice({
     name: 'app',
@@ -30,6 +32,9 @@ export const appSlice: Slice = createSlice({
         setBackgroundColor: (state, action) => {
             state.backgroundColor = action.payload;
         },
+        setUsername: (state, action) => {
+            state.username = action.payload;
+        }
     },
 });
 export const {
@@ -37,5 +42,6 @@ export const {
     setBackgroundImage,
     setBackgroundImageDeskto,
     setBackgroundColor,
+    setUsername
 } = appSlice.actions;
 export default appSlice.reducer;

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { DM_Sans } from 'next/font/google';
+import Header from '@components/sections/Header';
 import StoreProvider from '@app/StoreProvider';
 import ClientHosting from '@components/widgets/ClientHosting';
 import '@src/globalStyles.scss';
@@ -40,6 +41,7 @@ export default function RootLayout({
             <html lang='en-US' className={dm_sans.className} id='home'>
                 <body id='app'>
                     <ClientHosting>
+                        <Header />
                         <main>{children}</main>
                     </ClientHosting>
                 </body>
