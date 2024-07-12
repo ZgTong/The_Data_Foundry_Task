@@ -7,10 +7,15 @@ type ServiceRequest @model {
   name: String!
   description: String
   creationDate: AWSDate!
-  severity: String!
+  severity: Severity!
   resolutionDate: AWSDate!
   reporterName: String!
   contactInfo: AWSEmail!
   location: String!
-  caseNumber: String!
+}
+
+enum Severity {
+  Low
+  Medium
+  High
 }

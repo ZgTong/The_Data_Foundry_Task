@@ -22,9 +22,11 @@ export const createServiceRequest = /* GraphQL */ `mutation CreateServiceRequest
     reporterName
     contactInfo
     location
-    caseNumber
     createdAt
     updatedAt
+    _version
+    _deleted
+    _lastChangedAt
     __typename
   }
 }
@@ -46,9 +48,11 @@ export const updateServiceRequest = /* GraphQL */ `mutation UpdateServiceRequest
     reporterName
     contactInfo
     location
-    caseNumber
     createdAt
     updatedAt
+    _version
+    _deleted
+    _lastChangedAt
     __typename
   }
 }
@@ -70,9 +74,11 @@ export const deleteServiceRequest = /* GraphQL */ `mutation DeleteServiceRequest
     reporterName
     contactInfo
     location
-    caseNumber
     createdAt
     updatedAt
+    _version
+    _deleted
+    _lastChangedAt
     __typename
   }
 }

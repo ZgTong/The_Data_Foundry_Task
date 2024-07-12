@@ -7,27 +7,34 @@ export type CreateServiceRequestInput = {
   name: string,
   description?: string | null,
   creationDate: string,
-  severity: string,
+  severity: Severity,
   resolutionDate: string,
   reporterName: string,
   contactInfo: string,
   location: string,
-  caseNumber: string,
+  _version?: number | null,
 };
+
+export enum Severity {
+  Low = "Low",
+  Medium = "Medium",
+  High = "High",
+}
+
 
 export type ModelServiceRequestConditionInput = {
   name?: ModelStringInput | null,
   description?: ModelStringInput | null,
   creationDate?: ModelStringInput | null,
-  severity?: ModelStringInput | null,
+  severity?: ModelSeverityInput | null,
   resolutionDate?: ModelStringInput | null,
   reporterName?: ModelStringInput | null,
   contactInfo?: ModelStringInput | null,
   location?: ModelStringInput | null,
-  caseNumber?: ModelStringInput | null,
   and?: Array< ModelServiceRequestConditionInput | null > | null,
   or?: Array< ModelServiceRequestConditionInput | null > | null,
   not?: ModelServiceRequestConditionInput | null,
+  _deleted?: ModelBooleanInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
 };
@@ -72,20 +79,34 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
+export type ModelSeverityInput = {
+  eq?: Severity | null,
+  ne?: Severity | null,
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
 export type ServiceRequest = {
   __typename: "ServiceRequest",
   id: string,
   name: string,
   description?: string | null,
   creationDate: string,
-  severity: string,
+  severity: Severity,
   resolutionDate: string,
   reporterName: string,
   contactInfo: string,
   location: string,
-  caseNumber: string,
   createdAt: string,
   updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
 };
 
 export type UpdateServiceRequestInput = {
@@ -93,16 +114,17 @@ export type UpdateServiceRequestInput = {
   name?: string | null,
   description?: string | null,
   creationDate?: string | null,
-  severity?: string | null,
+  severity?: Severity | null,
   resolutionDate?: string | null,
   reporterName?: string | null,
   contactInfo?: string | null,
   location?: string | null,
-  caseNumber?: string | null,
+  _version?: number | null,
 };
 
 export type DeleteServiceRequestInput = {
   id: string,
+  _version?: number | null,
 };
 
 export type ModelServiceRequestFilterInput = {
@@ -110,17 +132,17 @@ export type ModelServiceRequestFilterInput = {
   name?: ModelStringInput | null,
   description?: ModelStringInput | null,
   creationDate?: ModelStringInput | null,
-  severity?: ModelStringInput | null,
+  severity?: ModelSeverityInput | null,
   resolutionDate?: ModelStringInput | null,
   reporterName?: ModelStringInput | null,
   contactInfo?: ModelStringInput | null,
   location?: ModelStringInput | null,
-  caseNumber?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelServiceRequestFilterInput | null > | null,
   or?: Array< ModelServiceRequestFilterInput | null > | null,
   not?: ModelServiceRequestFilterInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelIDInput = {
@@ -143,6 +165,7 @@ export type ModelServiceRequestConnection = {
   __typename: "ModelServiceRequestConnection",
   items:  Array<ServiceRequest | null >,
   nextToken?: string | null,
+  startedAt?: number | null,
 };
 
 export type ModelSubscriptionServiceRequestFilterInput = {
@@ -155,11 +178,11 @@ export type ModelSubscriptionServiceRequestFilterInput = {
   reporterName?: ModelSubscriptionStringInput | null,
   contactInfo?: ModelSubscriptionStringInput | null,
   location?: ModelSubscriptionStringInput | null,
-  caseNumber?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionServiceRequestFilterInput | null > | null,
   or?: Array< ModelSubscriptionServiceRequestFilterInput | null > | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -204,14 +227,16 @@ export type CreateServiceRequestMutation = {
     name: string,
     description?: string | null,
     creationDate: string,
-    severity: string,
+    severity: Severity,
     resolutionDate: string,
     reporterName: string,
     contactInfo: string,
     location: string,
-    caseNumber: string,
     createdAt: string,
     updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -227,14 +252,16 @@ export type UpdateServiceRequestMutation = {
     name: string,
     description?: string | null,
     creationDate: string,
-    severity: string,
+    severity: Severity,
     resolutionDate: string,
     reporterName: string,
     contactInfo: string,
     location: string,
-    caseNumber: string,
     createdAt: string,
     updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -250,14 +277,16 @@ export type DeleteServiceRequestMutation = {
     name: string,
     description?: string | null,
     creationDate: string,
-    severity: string,
+    severity: Severity,
     resolutionDate: string,
     reporterName: string,
     contactInfo: string,
     location: string,
-    caseNumber: string,
     createdAt: string,
     updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -272,14 +301,16 @@ export type GetServiceRequestQuery = {
     name: string,
     description?: string | null,
     creationDate: string,
-    severity: string,
+    severity: Severity,
     resolutionDate: string,
     reporterName: string,
     contactInfo: string,
     location: string,
-    caseNumber: string,
     createdAt: string,
     updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -298,16 +329,51 @@ export type ListServiceRequestsQuery = {
       name: string,
       description?: string | null,
       creationDate: string,
-      severity: string,
+      severity: Severity,
       resolutionDate: string,
       reporterName: string,
       contactInfo: string,
       location: string,
-      caseNumber: string,
       createdAt: string,
       updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
     } | null >,
     nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncServiceRequestsQueryVariables = {
+  filter?: ModelServiceRequestFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncServiceRequestsQuery = {
+  syncServiceRequests?:  {
+    __typename: "ModelServiceRequestConnection",
+    items:  Array< {
+      __typename: "ServiceRequest",
+      id: string,
+      name: string,
+      description?: string | null,
+      creationDate: string,
+      severity: Severity,
+      resolutionDate: string,
+      reporterName: string,
+      contactInfo: string,
+      location: string,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
   } | null,
 };
 
@@ -322,14 +388,16 @@ export type OnCreateServiceRequestSubscription = {
     name: string,
     description?: string | null,
     creationDate: string,
-    severity: string,
+    severity: Severity,
     resolutionDate: string,
     reporterName: string,
     contactInfo: string,
     location: string,
-    caseNumber: string,
     createdAt: string,
     updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -344,14 +412,16 @@ export type OnUpdateServiceRequestSubscription = {
     name: string,
     description?: string | null,
     creationDate: string,
-    severity: string,
+    severity: Severity,
     resolutionDate: string,
     reporterName: string,
     contactInfo: string,
     location: string,
-    caseNumber: string,
     createdAt: string,
     updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -366,13 +436,15 @@ export type OnDeleteServiceRequestSubscription = {
     name: string,
     description?: string | null,
     creationDate: string,
-    severity: string,
+    severity: Severity,
     resolutionDate: string,
     reporterName: string,
     contactInfo: string,
     location: string,
-    caseNumber: string,
     createdAt: string,
     updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };

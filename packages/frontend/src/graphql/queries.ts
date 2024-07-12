@@ -19,9 +19,11 @@ export const getServiceRequest = /* GraphQL */ `query GetServiceRequest($id: ID!
     reporterName
     contactInfo
     location
-    caseNumber
     createdAt
     updatedAt
+    _version
+    _deleted
+    _lastChangedAt
     __typename
   }
 }
@@ -45,16 +47,57 @@ export const listServiceRequests = /* GraphQL */ `query ListServiceRequests(
       reporterName
       contactInfo
       location
-      caseNumber
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
     nextToken
+    startedAt
     __typename
   }
 }
 ` as GeneratedQuery<
   APITypes.ListServiceRequestsQueryVariables,
   APITypes.ListServiceRequestsQuery
+>;
+export const syncServiceRequests = /* GraphQL */ `query SyncServiceRequests(
+  $filter: ModelServiceRequestFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncServiceRequests(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      name
+      description
+      creationDate
+      severity
+      resolutionDate
+      reporterName
+      contactInfo
+      location
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    nextToken
+    startedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.SyncServiceRequestsQueryVariables,
+  APITypes.SyncServiceRequestsQuery
 >;

@@ -1,4 +1,7 @@
 {
+  "providers": [
+    "awscloudformation"
+  ],
   "projectName": "TheDataFoundryTask",
   "version": "3.1",
   "frontend": "javascript",
@@ -10,8 +13,5 @@
       "BuildCommand": "pnpm run build",
       "StartCommand": "pnpm run start"
     }
-  },
-  "providers": [
-    "awscloudformation"
-  ]
+  }
 }

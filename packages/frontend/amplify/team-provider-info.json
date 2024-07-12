@@ -15,11 +15,11 @@
       "auth": {
         "thedatafoundrytaskfbee756c": {}
       },
-      "api": {
-        "thedatafoundrytask": {}
-      },
       "storage": {
         "s3tdf": {}
+      },
+      "api": {
+        "thedatafoundrytask": {}
       }
     }
   }

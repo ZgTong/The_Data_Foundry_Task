@@ -21,9 +21,11 @@ export const onCreateServiceRequest = /* GraphQL */ `subscription OnCreateServic
     reporterName
     contactInfo
     location
-    caseNumber
     createdAt
     updatedAt
+    _version
+    _deleted
+    _lastChangedAt
     __typename
   }
 }
@@ -44,9 +46,11 @@ export const onUpdateServiceRequest = /* GraphQL */ `subscription OnUpdateServic
     reporterName
     contactInfo
     location
-    caseNumber
     createdAt
     updatedAt
+    _version
+    _deleted
+    _lastChangedAt
     __typename
   }
 }
@@ -67,9 +71,11 @@ export const onDeleteServiceRequest = /* GraphQL */ `subscription OnDeleteServic
     reporterName
     contactInfo
     location
-    caseNumber
     createdAt
     updatedAt
+    _version
+    _deleted
+    _lastChangedAt
     __typename
   }
 }

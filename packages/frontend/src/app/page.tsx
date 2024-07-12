@@ -1,10 +1,10 @@
 'use client';
-import { FC, memo, useEffect } from 'react';
-import { Box, ThemeProvider } from '@mui/material';
+import { FC, memo } from 'react';
+import { Box, ThemeProvider, Typography } from '@mui/material';
 import theme from '@root/theme';
-import { useAppDispatch, useAppSelector } from '@lib/hooks';
+import { useAppSelector } from '@lib/hooks';
 import BackgroundSetter from '@components/widgets/BackgroundSetter';
-import { initialAppState } from '@lib/features/appSlice';
+import BrandLogo from '@components/widgets/BrandLogo';
 
 
 const Home: FC = memo(({}, searchParams) => {
@@ -29,10 +29,12 @@ const Home: FC = memo(({}, searchParams) => {
                         justifyContent: 'center',
                         width: '100%',
                         fontWeight: 'bold',
-                        height: '50'
+                        height: '50vh',
+                        gap: '30px',
                     }}
                 >
-                    Welcome: {username}
+                    <Typography variant='h4'>Welcome: {username}</Typography>
+                    <BrandLogo />
                 </Box>
             </Box>
         </ThemeProvider>
