@@ -44,7 +44,7 @@ export const schema = {
                     "name": "resolutionDate",
                     "isArray": false,
                     "type": "AWSDate",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "reporterName": {
@@ -107,5 +107,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "5a90dd25985a07b21b6cd4dafe93385d"
+    "version": "529f9ada3c3323bea59e384d9a72884f"
 };

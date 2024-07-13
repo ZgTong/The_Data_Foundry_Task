@@ -20,7 +20,7 @@ type EagerServiceRequest = {
   readonly description?: string | null;
   readonly creationDate: string;
   readonly severity: Severity | keyof typeof Severity;
-  readonly resolutionDate: string;
+  readonly resolutionDate?: string | null;
   readonly reporterName: string;
   readonly contactInfo: string;
   readonly location: string;
@@ -38,7 +38,7 @@ type LazyServiceRequest = {
   readonly description?: string | null;
   readonly creationDate: string;
   readonly severity: Severity | keyof typeof Severity;
-  readonly resolutionDate: string;
+  readonly resolutionDate?: string | null;
   readonly reporterName: string;
   readonly contactInfo: string;
   readonly location: string;

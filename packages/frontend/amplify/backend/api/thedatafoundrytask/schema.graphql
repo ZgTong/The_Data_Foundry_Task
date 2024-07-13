@@ -8,7 +8,7 @@ type ServiceRequest @model {
   description: String
   creationDate: AWSDate!
   severity: Severity!
-  resolutionDate: AWSDate!
+  resolutionDate: AWSDate
   reporterName: String!
   contactInfo: AWSEmail!
   location: String!

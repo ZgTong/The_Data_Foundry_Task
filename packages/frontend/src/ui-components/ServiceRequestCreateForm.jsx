@@ -72,7 +72,7 @@ export default function ServiceRequestCreateForm(props) {
     description: [],
     creationDate: [{ type: "Required" }],
     severity: [{ type: "Required" }],
-    resolutionDate: [{ type: "Required" }],
+    resolutionDate: [],
     reporterName: [{ type: "Required" }],
     contactInfo: [{ type: "Required" }, { type: "Email" }],
     location: [{ type: "Required" }],
@@ -299,7 +299,7 @@ export default function ServiceRequestCreateForm(props) {
       </SelectField>
       <TextField
         label="Resolution date"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         type="date"
         value={resolutionDate}

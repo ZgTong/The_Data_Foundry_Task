@@ -6,18 +6,33 @@ import { Box, TableCell } from '@mui/material';
 import { listServiceRequests } from '@src/graphql/queries';
 import { ServiceRequest } from '@root/src/API';
 import * as subscriptions from '@src/graphql/subscriptions';
-import ServiceRequestCreateForm, { ServiceRequestCreateFormInputValues } from '@src/ui-components/ServiceRequestCreateForm';
+import ServiceRequestCreateForm, {
+    ServiceRequestCreateFormInputValues
+} from '@src/ui-components/ServiceRequestCreateForm';
 import { Severity } from '@root/src/models';
 
 function Files() {
     const client = generateClient();
+    const initialValues = {
+        name: '',
+        description: '',
+        creationDate: '',
+        severity: '',
+        resolutionDate: '',
+        reporterName: '',
+        contactInfo: '',
+        location: '',
+    };
     const [formData, setFormData] = useState<
         ServiceRequestCreateFormInputValues
-    >();
+    >({});
     const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>(
         []
     );
-    const calculateResolutionDate = (creationDate: Date, severity: Severity) => {
+    const calculateResolutionDate = (
+        creationDate: Date,
+        severity: Severity
+    ) => {
         if (!creationDate) return '';
         const creation = new Date(creationDate);
         const severityDays = {
@@ -29,18 +44,18 @@ function Files() {
         creation.setDate(creation.getDate() + daysToAdd);
         return creation.toISOString().split('T')[0]; // YYYY-MM-DD
     };
+    const handleSubmit = (
+        fields: ServiceRequestCreateFormInputValues
+    ): ServiceRequestCreateFormInputValues => {
+        return fields;
+    };
     useEffect(() => {
-        client
-            .graphql({ query: subscriptions.onCreateServiceRequest })
-            .subscribe({
-                next: ({ data }) => {
-                    setServiceRequests(prev => [
-                        ...prev,
-                        data.onCreateServiceRequest,
-                    ]);
-                },
-                error: error => console.warn(error),
-            });
+        const createSub = client.graphql({ query: subscriptions.onCreateServiceRequest }).subscribe({
+            next: ({ data }) => {
+                setServiceRequests(prev => [...prev, data.onCreateServiceRequest]);
+            },
+            error: error => console.warn(error),
+        });
         const fetchData = async () => {
             const restOperation = await client.graphql({
                 query: listServiceRequests,
@@ -52,6 +67,7 @@ function Files() {
             }
         };
         fetchData();
+        return () => createSub.unsubscribe();
     }, []);
 
     return (
@@ -65,17 +81,27 @@ function Files() {
             }}
         >
             {/* from */}
-            <ServiceRequestCreateForm                
+            <ServiceRequestCreateForm
                 overrides={{
                     resolutionDate: {
-                        value: formData?.resolutionDate || '',                        
-                    }
+                        value: formData?.resolutionDate || '',
+                        readOnly: true,
+                    },
+                }}
+                onSubmit={(fields) => handleSubmit(formData)}
+                onSuccess={fields => {
+                    console.log("Success", fields)
+                    return initialValues;
                 }}
                 onChange={(
                     fields: ServiceRequestCreateFormInputValues
                 ): ServiceRequestCreateFormInputValues => {
-                    if(fields.creationDate && fields.severity) {
-                        fields.resolutionDate = calculateResolutionDate(new Date(fields.creationDate), fields.severity as Severity);
+                    if (fields.creationDate && fields.severity) {
+                        fields.resolutionDate = calculateResolutionDate(
+                            new Date(fields.creationDate),
+                            fields.severity as Severity
+                        );
+                        console.log('onChange', fields);
                     }
                     setFormData(fields);
                     return fields;
