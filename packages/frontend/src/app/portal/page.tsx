@@ -1,31 +1,46 @@
 'use client';
 import { generateClient } from 'aws-amplify/api';
-import {
-    Table,
-    TableBody,
-    TableHead,
-    TableRow
-} from '@aws-amplify/ui-react';
+import { Table, TableBody, TableHead, TableRow } from '@aws-amplify/ui-react';
 import { useState, useEffect } from 'react';
 import { Box, TableCell } from '@mui/material';
-import ServiceRequestCreateForm from '@src/ui-components/ServiceRequestCreateForm';
 import { listServiceRequests } from '@src/graphql/queries';
 import { ServiceRequest } from '@root/src/API';
 import * as subscriptions from '@src/graphql/subscriptions';
+import ServiceRequestCreateForm, { ServiceRequestCreateFormInputValues } from '@src/ui-components/ServiceRequestCreateForm';
+import { Severity } from '@root/src/models';
 
 function Files() {
     const client = generateClient();
-    const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>([]);
+    const [formData, setFormData] = useState<
+        ServiceRequestCreateFormInputValues
+    >();
+    const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>(
+        []
+    );
+    const calculateResolutionDate = (creationDate: Date, severity: Severity) => {
+        if (!creationDate) return '';
+        const creation = new Date(creationDate);
+        const severityDays = {
+            Low: 5,
+            Medium: 3,
+            High: 1,
+        };
+        const daysToAdd = severityDays[severity] || 0;
+        creation.setDate(creation.getDate() + daysToAdd);
+        return creation.toISOString().split('T')[0]; // YYYY-MM-DD
+    };
     useEffect(() => {
-
         client
-        .graphql({ query: subscriptions.onCreateServiceRequest })
-        .subscribe({
-            next: ({ data }) => {
-                setServiceRequests((prev) => [...prev, data.onCreateServiceRequest]);            
-            },
-            error: (error) => console.warn(error)
-        });
+            .graphql({ query: subscriptions.onCreateServiceRequest })
+            .subscribe({
+                next: ({ data }) => {
+                    setServiceRequests(prev => [
+                        ...prev,
+                        data.onCreateServiceRequest,
+                    ]);
+                },
+                error: error => console.warn(error),
+            });
         const fetchData = async () => {
             const restOperation = await client.graphql({
                 query: listServiceRequests,
@@ -50,7 +65,22 @@ function Files() {
             }}
         >
             {/* from */}
-            <ServiceRequestCreateForm />
+            <ServiceRequestCreateForm                
+                overrides={{
+                    resolutionDate: {
+                        value: formData?.resolutionDate || '',                        
+                    }
+                }}
+                onChange={(
+                    fields: ServiceRequestCreateFormInputValues
+                ): ServiceRequestCreateFormInputValues => {
+                    if(fields.creationDate && fields.severity) {
+                        fields.resolutionDate = calculateResolutionDate(new Date(fields.creationDate), fields.severity as Severity);
+                    }
+                    setFormData(fields);
+                    return fields;
+                }}
+            />
             {/* list */}
             <Table variation='bordered'>
                 <TableHead>
@@ -67,8 +97,8 @@ function Files() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {
-                        serviceRequests.map((item: ServiceRequest, index: number) => (
+                    {serviceRequests.map(
+                        (item: ServiceRequest, index: number) => (
                             <TableRow key={index}>
                                 <TableCell>{item.id}</TableCell>
                                 <TableCell>{item.name}</TableCell>
@@ -80,8 +110,8 @@ function Files() {
                                 <TableCell>{item.contactInfo}</TableCell>
                                 <TableCell>{item.location}</TableCell>
                             </TableRow>
-                        ))
-                    }
+                        )
+                    )}
                 </TableBody>
             </Table>
         </Box>
