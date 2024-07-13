@@ -27,7 +27,6 @@ import { HearderMenuData } from '@data/siteData';
 export const headerID = 'headerNav';
 
 const signOutAmplify = async () => {
-    console.log("sign out")
     await signOut();
 }
 const Header: FC = memo(() => {

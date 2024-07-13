@@ -90,7 +90,6 @@ function Files() {
                 }}
                 onSubmit={(fields) => handleSubmit(formData)}
                 onSuccess={fields => {
-                    console.log("Success", fields)
                     return initialValues;
                 }}
                 onChange={(
@@ -101,7 +100,6 @@ function Files() {
                             new Date(fields.creationDate),
                             fields.severity as Severity
                         );
-                        console.log('onChange', fields);
                     }
                     setFormData(fields);
                     return fields;
